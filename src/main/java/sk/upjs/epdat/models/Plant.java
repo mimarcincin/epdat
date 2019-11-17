@@ -18,7 +18,7 @@ import java.util.Date;
 public class Plant implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long plantId;
 
     @NotBlank
     private String family;
@@ -45,12 +45,12 @@ public class Plant implements Serializable {
     @LastModifiedDate
     private Date updatedAt;
 
-    public Long getId() {
-        return id;
+    public Long getPlantId() {
+        return plantId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPlantId(Long plantId) {
+        this.plantId = plantId;
     }
 
     public String getFamily() {
