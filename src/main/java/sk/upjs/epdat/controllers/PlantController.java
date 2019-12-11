@@ -17,28 +17,32 @@ import java.util.List;
 public class PlantController {
 
     @Autowired
-    PlantRepository plantRepository;
+    private PlantRepository plantRepository;
 
     // Get All Plants
     @GetMapping("/plants")
+    @CrossOrigin(origins = "http://localhost:3000")
     public List<Plant> getAllPlants() {
         return plantRepository.findAll();
     }
+
     // Create a new Note
     @PostMapping("/plants")
     public Plant createPlant(@Valid @RequestBody Plant plant) {
         return plantRepository.save(plant);
     }
+
     // Get a Single Note
     @GetMapping("/plants/{id}")
     public Plant getPlantById(@PathVariable(value = "id") Long plantId) {
         return plantRepository.findById(plantId)
                 .orElseThrow(() -> new ResourceNotFoundException("Plant", "id", plantId));
     }
+
     // Update a Note
     @PutMapping("/plants/{id}")
     public Plant updatePlant(@PathVariable(value = "id") Long plantId,
-                           @Valid @RequestBody Plant plantDetails) {
+                             @Valid @RequestBody Plant plantDetails) {
 
         Plant plant = plantRepository.findById(plantId)
                 .orElseThrow(() -> new ResourceNotFoundException("Plant", "id", plantId));
@@ -51,6 +55,7 @@ public class PlantController {
         Plant updatedPlant = plantRepository.save(plant);
         return updatedPlant;
     }
+
     // Delete a Note
     @DeleteMapping("/plants/{id}")
     public ResponseEntity<?> deletePlant(@PathVariable(value = "id") Long plantId) {

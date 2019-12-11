@@ -13,8 +13,9 @@ import sk.upjs.epdat.models.Record;
 import javax.validation.Valid;
 
 @RestController
+@RequestMapping("/api")
 public class RecordController {
-
+ 
     @Autowired
     private RecordRepository recordRepository;
 
@@ -48,7 +49,7 @@ public class RecordController {
         }).orElseThrow(() -> new ResourceNotFoundException("CommentId " + commentId + "not found"));
     }*/
 
-    @DeleteMapping("/plants/{plantId}/records/{recordId}")
+    /*@DeleteMapping("/plants/{plantId}/records/{recordId}")
     public ResponseEntity<?> deleteComment(@PathVariable (value = "plantId") Long plantId,
                                            @PathVariable (value = "recordId") Long recordId) {
         return recordRepository.findByIdAndRecordId(recordId, plantId).map(record -> {
@@ -56,6 +57,6 @@ public class RecordController {
             return ResponseEntity.ok().build();
         }).orElseThrow(() -> new ResourceNotFoundException("PlantId", "not found", plantId)); //upravit
     }
-
+*/
 
 }

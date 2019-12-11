@@ -24,7 +24,7 @@ public class Record implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+
     private int endopolyploidy;
 
     private String chromosomeNumber;
