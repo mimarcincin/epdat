@@ -25,13 +25,13 @@ public class Record implements Serializable {
     private Long id;
 
 
-    private int endopolyploidy;
+    private int endopolyploidy = -1;
 
     private String chromosomeNumber;
 
-    private int ploidyLevel;
+    private int ploidyLevel = -1;
 
-    private int number;
+    private int number = -1;
 
     private String indexType;
 

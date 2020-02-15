@@ -46,11 +46,17 @@ public class PlantController {
 
         Plant plant = plantRepository.findById(plantId)
                 .orElseThrow(() -> new ResourceNotFoundException("Plant", "id", plantId));
+        if (plantDetails.getFamily() != null)
+            plant.setFamily(plantDetails.getFamily());
+        if (plantDetails.getGenus() != null)
+            plant.setGenus(plantDetails.getGenus());
+        if (plantDetails.getSpecies() != null)
+            plant.setSpecies(plantDetails.getSpecies());
+        if (plantDetails.getAuthority() != null)
+            plant.setAuthority(plantDetails.getAuthority());
+        if (plantDetails.getNotice() != null)
+            plant.setNotice(plantDetails.getNotice());
 
-        plant.setFamily(plantDetails.getFamily());
-        plant.setGenus(plantDetails.getGenus());
-        plant.setSpecies(plantDetails.getGenus());
-        plant.setAuthority(plantDetails.getAuthority());
 
         Plant updatedPlant = plantRepository.save(plant);
         return updatedPlant;

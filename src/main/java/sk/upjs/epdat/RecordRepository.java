@@ -11,5 +11,5 @@ import java.util.Optional;
 @Repository
 public interface RecordRepository extends JpaRepository<Record, Long>{
     Page<Record> findByPlantId(Long plantId, Pageable pageable);
-   // Optional<Record> findByIdAndRecordId(Long id, Long recordId);
+    Optional<Record> findByPlantIdAndId(Long plantId, Long Id);
 }
