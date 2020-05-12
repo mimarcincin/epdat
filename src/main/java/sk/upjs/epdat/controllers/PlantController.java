@@ -1,5 +1,6 @@
 package sk.upjs.epdat.controllers;
 
+import org.springframework.data.jpa.repository.Query;
 import sk.upjs.epdat.exceptions.ResourceNotFoundException;
 import sk.upjs.epdat.models.Plant;
 import sk.upjs.epdat.PlantRepository;
@@ -14,6 +15,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 public class PlantController {
 
     @Autowired
@@ -21,7 +24,7 @@ public class PlantController {
 
     // Get All Plants
     @GetMapping("/plants")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin
     public List<Plant> getAllPlants() {
         return plantRepository.findAll();
     }
@@ -46,15 +49,15 @@ public class PlantController {
 
         Plant plant = plantRepository.findById(plantId)
                 .orElseThrow(() -> new ResourceNotFoundException("Plant", "id", plantId));
-        if (plantDetails.getFamily() != null)
+        if (plantDetails.getFamily() != "")
             plant.setFamily(plantDetails.getFamily());
-        if (plantDetails.getGenus() != null)
+        if (plantDetails.getGenus() != "")
             plant.setGenus(plantDetails.getGenus());
-        if (plantDetails.getSpecies() != null)
+        if (plantDetails.getSpecies() != "")
             plant.setSpecies(plantDetails.getSpecies());
-        if (plantDetails.getAuthority() != null)
+        if (plantDetails.getAuthority() != "")
             plant.setAuthority(plantDetails.getAuthority());
-        if (plantDetails.getNotice() != null)
+        if (plantDetails.getNotice() != "")
             plant.setNotice(plantDetails.getNotice());
 
 
@@ -71,5 +74,48 @@ public class PlantController {
         plantRepository.delete(plant);
 
         return ResponseEntity.ok().build();
+    }
+
+    //get all plants with family
+    @GetMapping("/plants/F/{family}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public List<Plant> getAllPlantsByFamily(@PathVariable(value = "family") String family) {
+        return plantRepository.findAllByFamily(family);
+    }
+
+    //get all plants with family and genus
+    @GetMapping("/plants/FG/{family}/{genus}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public List<Plant> getAllPlantsByFamilyAndGenus(@PathVariable(value = "family") String family, @PathVariable(value = "genus") String genus) {
+        return plantRepository.findAllByFamilyAndGenusContaining(family, genus);
+    }
+
+    //get all plants with family and genus and species
+    @GetMapping("/plants/FGS/{family}/{genus}/{species}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public List<Plant> getAllPlantsByFamilyAndGenusAndSpecies(@PathVariable(value = "family") String family, @PathVariable(value = "genus") String genus, @PathVariable(value = "species") String species) {
+        return plantRepository.findAllByFamilyAndGenusContainingAndSpeciesContaining(family, genus, species);
+    }
+
+   //get all plants with family and tissue
+    @GetMapping("/plants/FT/{family}/{recordTissue}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public List<Plant> getAllPlantsByFamilyAndTissue(@PathVariable(value = "family") String family, @PathVariable(value = "recordTissue") String recordTissue){
+        return plantRepository.findAllbyFamilyAndTissue(family, recordTissue);
+
+    }
+
+    //get all plants with family and genus and tissue
+    @GetMapping("/plants/FGT/{family}/{genus}/{tissue}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public List<Plant> getAllPlantsByFamilyAndGenusAndTissue(@PathVariable(value = "family") String family, @PathVariable(value = "genus") String genus, @PathVariable(value = "tissue") String tissue) {
+        return plantRepository.findAllByFamilyAndGenusAndTissue(family, genus, tissue);
+    }
+
+    //get all plants with family and genus and species and tissue
+    @GetMapping("/plants/FGST/{family}/{genus}/{species}/{tissue}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public List<Plant> getAllPlantsByFamilyAndGenusAndSpeciesAndTissue(@PathVariable(value = "family") String family, @PathVariable(value = "genus") String genus, @PathVariable(value = "species") String species, @PathVariable(value = "tissue") String tissue) {
+        return plantRepository.findAllByFamilyAndGenusAndSpeciesAndTissue(family, genus, species, tissue);
     }
 }

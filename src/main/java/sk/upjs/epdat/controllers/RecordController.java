@@ -14,6 +14,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class RecordController {
 
     @Autowired
@@ -26,6 +27,7 @@ public class RecordController {
     public Page<Record> getAllRecordsByPlantId(@PathVariable(value = "plantId") Long plantId, Pageable pageable) {
         return recordRepository.findByPlantId(plantId, pageable);
     }
+
 
     @PostMapping("/plants/{plantId}/records")
     public Record createRecord(@PathVariable(value = "plantId") Long plantId,
@@ -45,25 +47,25 @@ public class RecordController {
         }
 
         return recordRepository.findById(recordId).map(record -> {
-            if (recordRequest.getEndopolyploidy() >= 0)
+            if (recordRequest.getEndopolyploidy() > -1)
                 record.setEndopolyploidy(recordRequest.getEndopolyploidy());
-            if (recordRequest.getChromosomeNumber() != null)
+            if (!recordRequest.getChromosomeNumber().equals(""))
                 record.setChromosomeNumber(recordRequest.getChromosomeNumber());
-            if (recordRequest.getPloidyLevel() >= 0)
+            if (recordRequest.getPloidyLevel() > -1)
                 record.setPloidyLevel(recordRequest.getPloidyLevel());
-            if (recordRequest.getNumber() >= 0)
+            if (recordRequest.getNumber() > -1)
                 record.setNumber(recordRequest.getNumber());
-            if (recordRequest.getIndexType()!=null)
+            if (!recordRequest.getIndexType().equals(""))
                 record.setIndexType(recordRequest.getIndexType());
-            if (recordRequest.getTissue()!=null)
+            if (!recordRequest.getTissue().equals(""))
                 record.setTissue(recordRequest.getTissue());
             return recordRepository.save(record);
-        }).orElseThrow(() -> new ResourceNotFoundException("CommentId ","recordId", recordId));
+        }).orElseThrow(() -> new ResourceNotFoundException("CommentId ", "recordId", recordId));
     }
 
     @DeleteMapping("/plants/{plantId}/records/{recordId}")
-    public ResponseEntity<?> deleteComment(@PathVariable (value = "plantId") Long plantId,
-                                           @PathVariable (value = "recordId") Long recordId) {
+    public ResponseEntity<?> deleteComment(@PathVariable(value = "plantId") Long plantId,
+                                           @PathVariable(value = "recordId") Long recordId) {
         return recordRepository.findByPlantIdAndId(plantId, recordId).map(record -> {
             recordRepository.delete(record);
             return ResponseEntity.ok().build();
