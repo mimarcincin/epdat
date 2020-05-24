@@ -11,6 +11,7 @@ import sk.upjs.epdat.exceptions.ResourceNotFoundException;
 import sk.upjs.epdat.models.Record;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -24,8 +25,8 @@ public class RecordController {
     private PlantRepository plantRepository;
 
     @GetMapping("/plants/{plantId}/records")
-    public Page<Record> getAllRecordsByPlantId(@PathVariable(value = "plantId") Long plantId, Pageable pageable) {
-        return recordRepository.findByPlantId(plantId, pageable);
+    public List<Record> getAllRecordsByPlantId(@PathVariable(value = "plantId") Long plantId) {
+        return recordRepository.findByPlantId(plantId);
     }
 
 

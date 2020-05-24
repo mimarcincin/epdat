@@ -7,10 +7,11 @@ import org.springframework.stereotype.Repository;
 import sk.upjs.epdat.models.Record;
 
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface RecordRepository extends JpaRepository<Record, Long>{
-    Page<Record> findByPlantId(Long plantId, Pageable pageable);
+    List<Record> findByPlantId(Long plantId);
     Optional<Record> findByPlantIdAndId(Long plantId, Long Id);
 }
