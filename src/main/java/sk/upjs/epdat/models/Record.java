@@ -9,7 +9,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -31,11 +30,14 @@ public class Record implements Serializable {
 
     private int ploidyLevel = -1;
 
-    private int number = -1;
+    @Column(columnDefinition="float")
+    private float number = -1;
 
     private String indexType;
 
     private String tissue;
+
+    private String source;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -93,11 +95,11 @@ public class Record implements Serializable {
         this.ploidyLevel = ploidyLevel;
     }
 
-    public int getNumber() {
+    public float getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(float number) {
         this.number = number;
     }
 
@@ -115,6 +117,14 @@ public class Record implements Serializable {
 
     public void setTissue(String tissue) {
         this.tissue = tissue;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 
     public Date getCreatedAt() {

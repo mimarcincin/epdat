@@ -12,16 +12,27 @@ public interface PlantRepository extends JpaRepository<Plant, Long> {
 
     List<Plant> findAllByFamily(String family);
 
-    List<Plant> findAllByFamilyAndGenusContaining(String family, String genus);
+ //   List<Plant> findAllByFamilyAndGenusContaining(String family, String genus);
 
-    List<Plant> findAllByFamilyAndGenusContainingAndSpeciesContaining(String family, String genus, String species);
+ //   List<Plant> findAllByFamilyAndGenusContainingAndSpeciesContaining(String family, String genus, String species);
 
     @Query(value = "SELECT * FROM plants WHERE plants.family = ?1 AND plants.id IN ( SELECT records.plant_id FROM records WHERE tissue LIKE %?2%)", nativeQuery = true)
     List<Plant> findAllbyFamilyAndTissue(String family, String tissue);
 
-    @Query(value = "SELECT * FROM plants WHERE plants.family = ?1 AND plants.genus LIKE %?2% AND plants.id IN ( SELECT records.plant_id FROM records WHERE tissue LIKE %?3%)", nativeQuery = true)
-    List<Plant> findAllByFamilyAndGenusAndTissue(String family, String genus, String tissue);
+ //   @Query(value = "SELECT * FROM plants WHERE plants.family = ?1 AND plants.genus LIKE %?2% AND plants.id IN ( SELECT records.plant_id FROM records WHERE tissue LIKE %?3%)", nativeQuery = true)
+ //   List<Plant> findAllByFamilyAndGenusAndTissue(String family, String genus, String tissue);
 
-    @Query(value = "SELECT * FROM plants WHERE plants.family = ?1 AND plants.genus LIKE %?2% AND plants.species LIKE %?3% AND plants.id IN ( SELECT records.plant_id FROM records WHERE tissue LIKE %?4%)", nativeQuery = true)
-    List<Plant> findAllByFamilyAndGenusAndSpeciesAndTissue(String family, String genus, String species, String tissue);
+  //  @Query(value = "SELECT * FROM plants WHERE plants.family = ?1 AND plants.genus LIKE %?2% AND plants.species LIKE %?3% AND plants.id IN ( SELECT records.plant_id FROM records WHERE tissue LIKE %?4%)", nativeQuery = true)
+  //  List<Plant> findAllByFamilyAndGenusAndSpeciesAndTissue(String family, String genus, String species, String tissue);
+
+    List<Plant> findAllByGenus(String genus);
+
+    List<Plant> findAllBySpecies(String genus);
+
+    @Query(value = "SELECT * FROM plants WHERE plants.genus = ?1 AND plants.id IN ( SELECT records.plant_id FROM records WHERE tissue LIKE %?2%)", nativeQuery = true)
+    List<Plant> findAllByGenusAndTissue(String genus, String tissue);
+
+    @Query(value = "SELECT * FROM plants WHERE plants.id IN ( SELECT records.plant_id FROM records WHERE tissue LIKE %?1%)", nativeQuery = true)
+    List<Plant> findAllByTissue(String tissue);
+
 }

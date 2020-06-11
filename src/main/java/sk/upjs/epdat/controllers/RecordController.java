@@ -60,6 +60,8 @@ public class RecordController {
                 record.setIndexType(recordRequest.getIndexType());
             if (!recordRequest.getTissue().equals(""))
                 record.setTissue(recordRequest.getTissue());
+            if (!recordRequest.getSource().equals(""))
+                record.setSource(recordRequest.getSource());
             return recordRepository.save(record);
         }).orElseThrow(() -> new ResourceNotFoundException("CommentId ", "recordId", recordId));
     }
