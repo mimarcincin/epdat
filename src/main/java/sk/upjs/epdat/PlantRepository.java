@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface PlantRepository extends JpaRepository<Plant, Long> {
 
+
     List<Plant> findAllByFamily(String family);
 
  //   List<Plant> findAllByFamilyAndGenusContaining(String family, String genus);
